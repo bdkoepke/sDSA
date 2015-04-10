@@ -41,7 +41,7 @@ public class sDSA {
         });
     }
 
-    public static sDSA sDSA(String ocraSuite, String key, String password, final int counter) {
+    public static sDSA create(String ocraSuite, String key, String password, final int counter) {
         // no true closures for java ;(
         return new sDSA(ocraSuite, key, password, new Supplier<Integer>() {
             private int mutable_counter = counter;
