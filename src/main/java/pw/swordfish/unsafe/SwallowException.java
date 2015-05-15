@@ -1,5 +1,7 @@
 package pw.swordfish.unsafe;
 
+import pw.swordfish.diag.Contract;
+
 public class SwallowException extends RuntimeException {
     public SwallowException(Exception e) {
         super(e);
@@ -11,7 +13,6 @@ public class SwallowException extends RuntimeException {
 
     @SuppressWarnings("unchecked")
     public <T extends Exception> T checkedGetSuppressed(int index) {
-        assert (index >= 0);
-        return (T)super.getSuppressed()[index];
+        return (T)super.getSuppressed()[Contract.ensures(i -> i >= 0, index, "index")];
     }
 }

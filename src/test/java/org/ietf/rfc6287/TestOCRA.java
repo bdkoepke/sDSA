@@ -19,34 +19,29 @@ import java.text.SimpleDateFormat;
 public class TestOCRA {
 
     public static String asHex (byte buf[]) {
-        StringBuffer strbuf = new StringBuffer(buf.length * 2);
+        StringBuilder sbuf = new StringBuilder(buf.length * 2);
         int i;
 
         for (i = 0; i < buf.length; i++) {
             if (((int) buf[i] & 0xff) < 0x10)
-                strbuf.append("0");
-            strbuf.append(Long.toString((int) buf[i] & 0xff, 16));
+                sbuf.append("0");
+            sbuf.append(Long.toString((int) buf[i] & 0xff, 16));
         }
-        return strbuf.toString();
+        return sbuf.toString();
     }
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
+    public static void main(String... args) {
 
-        String ocra = "";
-        String seed = "";
-        String ocraSuite = "";
-        String counter = "";
-        String password = "";
-        String sessionInformation = "";
-        String question = "";
+        String ocra;
+        String seed;
+        String ocraSuite;
+        String counter;
+        String password;
+        String sessionInformation;
+        String question;
 
-
-
-        String qHex = "";
-        String timeStamp = "";
+        String qHex;
+        String timeStamp;
 
         // PASS1234 is SHA1 hash of "1234"
         String PASS1234 = "7110eda4d09e062aa5e4a390b0a572ac0d2c0220";
@@ -60,8 +55,8 @@ public class TestOCRA {
                 "3031323334";
         int STOP = 5;
 
-        Date myDate = Calendar.getInstance().getTime();
-        BigInteger b = new BigInteger("0");
+        Date myDate;
+        BigInteger b;
         String sDate = "Mar 25 2008, 12:06:30 GMT";
 
         try{
@@ -109,14 +104,13 @@ public class TestOCRA {
             System.out.println("=======================");
             seed = SEED;
             counter = "";
-            question = "";
             password = "";
             sessionInformation = "";
             timeStamp = "";
             for(int i=0; i < 10; i++){
                 question = "" + i + i + i + i + i + i + i + i;
-                qHex = new String((new BigInteger(question,10))
-                        .toString(16)).toUpperCase();
+                qHex = (new BigInteger(question, 10))
+                        .toString(16).toUpperCase();
                 ocra = OCRA.generateOCRA(ocraSuite,seed,counter,
                         qHex,password,
                         sessionInformation,timeStamp);
@@ -129,15 +123,14 @@ public class TestOCRA {
             System.out.println(ocraSuite);
             System.out.println("=================================");
             seed = SEED32;
-            counter = "";
             question = "12345678";
             password = PASS1234;
             sessionInformation = "";
             timeStamp = "";
             for(int i=0; i < 10; i++){
                 counter = "" + i;
-                qHex = new String((new BigInteger(question,10))
-                        .toString(16)).toUpperCase();
+                qHex = (new BigInteger(question, 10))
+                        .toString(16).toUpperCase();
                 ocra = OCRA.generateOCRA(ocraSuite,seed,counter,
                         qHex,password,sessionInformation,timeStamp);
                 System.out.println("Key: Standard 32Byte  C: "
@@ -153,15 +146,14 @@ public class TestOCRA {
             System.out.println("===============================");
             seed = SEED32;
             counter = "";
-            question = "";
             password = PASS1234;
             sessionInformation = "";
             timeStamp = "";
             for(int i=0; i < STOP; i++){
                 question = "" + i + i + i + i + i + i + i + i;
 
-                qHex = new String((new BigInteger(question,10))
-                        .toString(16)).toUpperCase();
+                qHex = (new BigInteger(question, 10))
+                        .toString(16).toUpperCase();
                 ocra = OCRA.generateOCRA(ocraSuite,seed,counter,
                         qHex,password,sessionInformation,timeStamp);
                 System.out.println("Key: Standard 32Byte  Q: "
@@ -174,15 +166,13 @@ public class TestOCRA {
             System.out.println(ocraSuite);
             System.out.println("===========================");
             seed = SEED64;
-            counter = "";
-            question = "";
             password = "";
             sessionInformation = "";
             timeStamp = "";
             for(int i=0; i < 10; i++){
                 question = "" + i + i + i + i + i + i + i + i;
-                qHex = new String((new BigInteger(question,10))
-                        .toString(16)).toUpperCase();
+                qHex = (new BigInteger(question, 10))
+                        .toString(16).toUpperCase();
                 counter = "0000" + i;
                 ocra = OCRA.generateOCRA(ocraSuite,seed,counter,
                         qHex,password,sessionInformation,timeStamp);
@@ -196,16 +186,14 @@ public class TestOCRA {
             System.out.println(ocraSuite);
             System.out.println("=============================");
             seed = SEED64;
-            counter = "";
-            question = "";
             password = "";
             sessionInformation = "";
             timeStamp = b.toString(16);
             for(int i=0; i < STOP; i++){
                 question = "" + i + i + i + i + i + i + i + i;
                 counter = "";
-                qHex = new String((new BigInteger(question,10))
-                        .toString(16)).toUpperCase();
+                qHex = (new BigInteger(question, 10))
+                        .toString(16).toUpperCase();
                 ocra = OCRA.generateOCRA(ocraSuite,seed,counter,
                         qHex,password,sessionInformation,timeStamp);
 
@@ -230,7 +218,6 @@ public class TestOCRA {
                     "===========================");
             seed = SEED32;
             counter = "";
-            question = "";
             password = "";
             sessionInformation = "";
             timeStamp = "";
@@ -262,11 +249,8 @@ public class TestOCRA {
                     + ocraSuite2);
             System.out.println("===============================" +
                     "=================================");
-            ocraSuite = "";
             seed = SEED64;
             counter = "";
-            question = "";
-            password = "";
             sessionInformation = "";
             timeStamp = "";
             for(int i=0; i < STOP; i++){
@@ -302,7 +286,6 @@ public class TestOCRA {
             System.out.println("=========================");
             seed = SEED32;
             counter = "";
-            question = "";
             password = "";
             sessionInformation = "";
             timeStamp = "";
@@ -323,7 +306,6 @@ public class TestOCRA {
             System.out.println("=============================");
             seed = SEED64;
             counter = "";
-            question = "";
             password = "";
             sessionInformation = "";
             timeStamp = b.toString(16);
